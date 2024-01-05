@@ -1,0 +1,17 @@
+name: app workflow
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+    - testbranch
+jobs:
+  unit-testing:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout action
+      uses: actions/checkout@v4
+    - name: test
+      run: echo "This is test message"
+    - name: Run app
+      run: python3 app.py
