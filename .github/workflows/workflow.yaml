@@ -8,6 +8,8 @@ on:
 jobs:
   unit-testing:
     runs-on: ubuntu-latest
+    env:
+      choice: green
     steps:
     - name: Checkout action
       uses: actions/checkout@v4
@@ -19,5 +21,3 @@ jobs:
       run: python3 app.py &
     - name: Give output
       run: curl http://127.0.0.1:5000
-      env:
-        choice: green
