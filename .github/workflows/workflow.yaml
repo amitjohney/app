@@ -23,4 +23,8 @@ jobs:
     - name: Run app
       run: python3 app.py &
     - name: Give output
+      id: myoutput
       run: curl http://127.0.0.1:5000
+    - name: check me
+      run: echo "${{steps.myoutput.outputs}}"
+      
