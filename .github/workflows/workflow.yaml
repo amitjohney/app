@@ -8,8 +8,11 @@ on:
 jobs:
   unit-testing:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        colors: ["green","blue","black"]
     env:
-      choice: green
+      choice: ${{matrix.colors}}
     steps:
     - name: Checkout action
       uses: actions/checkout@v4
