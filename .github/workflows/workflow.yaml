@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        colors: ["green","blue","blacks"]
+        colors: ["green","blue","black"]
     env:
       choice: ${{matrix.colors}}
     steps:
