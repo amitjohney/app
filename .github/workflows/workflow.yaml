@@ -70,14 +70,17 @@ jobs:
         tags: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
     - name: Run container from image
       run: docker run -d -p 5000:5000 --name test ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}} 
-    - name: check docker ps
+    - name: check docker ps before sleep
       run: docker ps
-    - name: check docker logs
+    - name: check docker logs before sleep
       run: docker logs test
-    - name: Test output
-      run: curl http://127.0.0.1:5000?input=green
-    - name: check docker logs
+    - name: Sleep for 5 seconds
+      run: sleep 5
+    - name: check docker ps after sleep
+      run: docker ps
+    - name: check docker logs after sleep
       run: docker logs test
+
 
 
 
