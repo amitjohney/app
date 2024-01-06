@@ -15,10 +15,16 @@ metadata:
   name: amitapp
   namespace: amit-dev
 spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: amitmyapp
   template:
     metadata:
       name: amitapppod
       namespace: amit-dev
+      labels:
+        app: amitmyapp
     spec:
       containers:
         - name: amitapppod
