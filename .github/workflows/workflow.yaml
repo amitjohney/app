@@ -105,6 +105,15 @@ jobs:
       with:
         openshift_server_url: https://api.opc-sonf-ogn.orange-guinee.com:6443
         openshift_token: sha256~FWfBMPsaoKSIfl21tUurD03EgsVbjJu3tj9HkVVLJV4
+    - name: Get node info
+      run: oc get nodes
+    - name: Replacing image name in kubernetes/development/deployment.yaml
+      uses:  cschleiden/replace-tokens@v1
+      with:
+        tokenPrefix: '_{_'
+        tokenSuffix: '_}_'
+        files: '["kubernetes/development/deployment.yaml"]'
+
     - name: Deploy on dev environment
       run: oc apply -f kubernets/development/deployment.yaml
     
