@@ -1,6 +1,7 @@
 name: app workflow
 env:
   choice: blue
+  ENV_NAME: local
 on: 
   workflow_dispatch:
   push:

@@ -3,14 +3,16 @@ import os
 import sys
 app = Flask(__name__)
 color = os.environ.get('choice')
-myfile=open("testoutput","a")
-myfile.write(f"Environment variable value for choice is {color}")
-myfile.close()
+if os.environ.get('ENV_NAME') not in ["dev","prod"]:
+  myfile=open("testoutput","a")
+  myfile.write(f"Environment variable value for choice is {color}")
+  myfile.close()
 @app.route('/')
 def hello_name():
-   myfile=open("testoutput","a")
-   myfile.write(f"input={request.args.get('input')}")
-   myfile.close()
+   if os.environ.get('ENV_NAME') not in ["dev","prod"]:
+     myfile=open("testoutput","a")
+     myfile.write(f"input={request.args.get('input')}")
+     myfile.close()
    if request.args.get('input') not in ["green","blue","black","red"]:
      
      sys.exit(1)
