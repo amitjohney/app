@@ -9,7 +9,7 @@ metadata:
 type: kubernetes.io/dockerconfigjson
 
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: amitapp
