@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: amitapppod
-          image: _{_imagename_}_
+          image: amitkumarjo1994/myworkflowappqsimage-31b9867dbb2b29ce6ab8cd25e2daabd88d8fc05b
           envFrom:
             - configMapRef:
                 name: config
