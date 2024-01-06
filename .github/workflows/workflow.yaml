@@ -77,7 +77,7 @@ jobs:
     - name: Sleep for 5 seconds
       run: sleep 5
     - name: check api output after sleep
-      run: curl http://localhost:5000?input=greens
+      run: curl http://localhost:5000?input=green
     - name: check docker logs after sleep
       run: docker logs test
 
