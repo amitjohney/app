@@ -163,7 +163,8 @@ jobs:
 
   prod-integration-test:
     runs-on: ubuntu-latest
-   # needs: prod-deploy
+    if: contains(github.ref,'main')
+    needs: prod-deploy
     steps:
     - name: Checkout action at prod-integration-step
       uses: actions/checkout@v4
