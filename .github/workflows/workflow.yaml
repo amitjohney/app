@@ -117,8 +117,7 @@ jobs:
         files: '["kubernetes/development/deployment.yaml"]'
       env:
         imagename: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
-
-
+        mychoice: ${{env.choice}}
     - name: Deploy on dev environment
       run: oc apply -f kubernetes/development/deployment.yaml
     

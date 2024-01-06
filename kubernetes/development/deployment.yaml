@@ -48,7 +48,7 @@ metadata:
   namespace: amit-dev
   name: config
 data:
-  choice: pink
+  choice: _{_mychoice_}_
 
 ---
 apiVersion: route.openshift.io/v1
