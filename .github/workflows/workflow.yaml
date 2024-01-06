@@ -68,8 +68,6 @@ jobs:
         context: .
         push: false
         tags: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
-    - name: test python
-      run: python3 app.py
     - name: Run container from image
       run: docker run -d -p 5000:5000 --name test ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}} 
     - name: check docker ps
