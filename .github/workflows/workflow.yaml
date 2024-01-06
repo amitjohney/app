@@ -90,7 +90,7 @@ jobs:
         tags: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
   dev-deploy:
     needs: integration-test
-    uses: ./.github\workflows\reusable-workflow.yaml
+    uses: ./.github/workflows/reusable-workflow.yaml
     secrets:
       githubtoken: ${{github.token}}
       token: "sha256~FWfBMPsaoKSIfl21tUurD03EgsVbjJu3tj9HkVVLJV4"
