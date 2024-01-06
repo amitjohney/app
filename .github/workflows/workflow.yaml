@@ -52,3 +52,10 @@ jobs:
       with:
         name: coverage-report
         path: testoutput
+  unit-coverage2:
+        runs-on: ubuntu-latest
+        needs: unit-coverage
+        continue-on-error: true
+        steps:
+        - name: Checkout action at unit-coverage job
+          run: echo "Hello World"
