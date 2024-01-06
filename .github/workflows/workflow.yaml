@@ -93,7 +93,7 @@ jobs:
     needs: integration-test
     environment:
       name: dev
-      url: https://amitapppod-service-amit-${{ENV_NAME}}.apps.opc-sonf-ogn.orange-guinee.com/?input=green
+      url: https://amitapppod-service-amit-${{vars.ENV_NAME}}.apps.opc-sonf-ogn.orange-guinee.com/?input=green
     steps:
     - name: Checkout action at dev-deploy jobs
       uses: actions/checkout@v4
