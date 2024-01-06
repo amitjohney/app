@@ -79,8 +79,13 @@ jobs:
       run: sleep 5
     - name: check api output after sleep
       run: curl http://localhost:5000?input=green
-    - name: check docker logs after sleep
-      run: docker logs test
+    - name: Docker Push
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        push: true
+        tags: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
+
 
 
 
