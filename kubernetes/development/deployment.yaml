@@ -1,0 +1,70 @@
+---
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJkb2NrZXIuaW8iOnsidXNlcm5hbWUiOiJhbWl0a3VtYXJqbzE5OTQiLCJwYXNzd29yZCI6IlBlc0AxMjM0NSIsImF1dGgiOiJZVzFwZEd0MWJXRnlhbTh4T1RrME9sQmxjMEF4TWpNME5RPT0ifX19
+kind: Secret
+metadata:
+  name: secretregistry
+  namespace: amit-_{_ENV_NAME_}_
+type: kubernetes.io/dockerconfigjson
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: amitapppod
+  namespace: amit-_{_ENV_NAME_}_
+  labels:
+    app: amitmyapp
+spec:
+  containers:
+    - name: amitapppod
+      image: _{_imagename_}_
+      envFrom:
+        - configMapRef:
+            name: config
+  imagePullSecrets:
+    - name: secretregistry
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: amitapppod-service
+  namespace: amit-_{_ENV_NAME_}_
+spec:
+  type: NodePort
+  selector:
+    app: amitmyapp
+  ports:
+    - port: 80
+      targetPort: 5000
+      nodePort: 30007
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: amit-_{_ENV_NAME_}_
+  name: config
+data:
+  choice: _{_mychoice_}_
+  ENV_NAME: _{_ENV_NAME_}_
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  name: amitapppod-service
+  namespace: amit-_{_ENV_NAME_}_
+spec:
+  host: amitapppod-service-amit-_{_ENV_NAME_}_.apps.opc-sonf-ogn.orange-guinee.com
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: amitapppod-service
+    weight: 100
+  wildcardPolicy: None
