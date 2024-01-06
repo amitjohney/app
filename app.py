@@ -5,6 +5,7 @@ app = Flask(__name__)
 color = os.environ.get('choice')
 myfile=open("testoutput","a")
 myfile.write(f"Environment variable value for choice is {color}")
+myfile.close()
 @app.route('/')
 def hello_name():
    myfile=open("testoutput","a")
