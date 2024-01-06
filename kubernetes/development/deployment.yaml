@@ -10,7 +10,7 @@ type: kubernetes.io/dockerconfigjson
 
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: amitapp
   namespace: amit-dev
