@@ -8,3 +8,4 @@ if os.environ.get("ENV_NAME") == "local":
 else:
   for input in ["red","green","blue"]:
     response = requests.get(f"https://amitapppod-service-amit-{os.environ.get('ENV_NAME')}.apps.opc-sonf-ogn.orange-guinee.com/?input={input}")
+    print(response)

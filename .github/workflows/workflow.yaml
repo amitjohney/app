@@ -163,6 +163,8 @@ jobs:
 
   prod-integration-test:
     runs-on: ubuntu-latest
+    env:
+      ENV_NAME: local
     if: contains(github.ref,'main')
     needs: prod-deploy
     steps:
