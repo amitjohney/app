@@ -71,8 +71,6 @@ jobs:
         - name: Run container from image
           run: docker run -d -p 5000:5000 --name test ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}} 
         - name: Test output
-          run: docker ps
-        - name: check docker log
-          run: docker logs test
+          run: curl http://localhost:5000?input=green
 
 
