@@ -1,4 +1,6 @@
 name: app workflow
+env:
+  choice: Indian
 on: 
   workflow_dispatch:
   push:
@@ -8,13 +10,8 @@ on:
 jobs:
   unit-testing:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        colors: ["green","blue","black"]
-    env:
-      choice: ${{matrix.colors}}
     steps:
-    - name: Checkout action
+    - name: Checkout action at unit-test job
       uses: actions/checkout@v4
     - name: Install flask
       run: pip3 install flask
@@ -22,7 +19,7 @@ jobs:
       run: python3 app.py &
     - name: Give output
       id: myoutput
-      run: curl http://127.0.0.2:5000
+      run: curl http://127.0.0.2:5000?input=black
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
@@ -31,24 +28,24 @@ jobs:
   unit-coverage:
     runs-on: ubuntu-latest
     needs: unit-testing
-    strategy:
-      matrix:
-        colors: ["green","blue","blacks"]
-    env: 
-        choice: ${{matrix.colors}}
     steps:
-    - name: Checkout action
+    - name: Checkout action at unit-coverage job
       uses: actions/checkout@v4
     - name: Install flask
       run: pip3 install flask
     - name: Run app
       run: python3 app.py &
-    - name: Give output
+    - name: Running Test script test.sh
       id: myoutput
-      run: curl http://127.0.0.2:5000
-    - name: Download artifact
+      run: ./test.sh
+    - name: Download artifact created in unit-testing job
       uses: actions/download-artifact@v4
       with:
         name: myartifact
     - name: Check content of Downloaded artifact form unit-testing job
       run: cat testoutput
+    - name: Upload coverage artifact report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: coverage_report
