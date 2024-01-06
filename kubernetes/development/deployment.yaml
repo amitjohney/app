@@ -9,32 +9,6 @@ metadata:
 type: kubernetes.io/dockerconfigjson
 
 ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: amitapp
-#   namespace: amit-dev
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: amitmyapp
-#   template:
-#     metadata:
-#       name: amitapppod
-#       namespace: amit-dev
-#       labels:
-#         app: amitmyapp
-#     spec:
-#       containers:
-#         - name: amitapppod
-#           image: _{_imagename_}_
-#           envFrom:
-#             - configMapRef:
-#                 name: config
-#       imagePullSecrets:
-#         - name: secretregistry
----
 apiVersion: v1
 kind: Pod
 metadata:
