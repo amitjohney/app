@@ -85,6 +85,25 @@ jobs:
         context: .
         push: true
         tags: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
+  dev-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout action at dev-deploy jobs
+      uses: actions/checkout@v4
+    - name: Install oc
+      uses: redhat-actions/openshift-tools-installer@v1
+      with:
+        source: "github"
+        github_pat: "${{github.token}}"
+        kam: "latest"
+    - name: Setup oc
+      uses: redhat-actions/oc-login@v1
+      with:
+        openshift_server_url: https://api.opc-sonf-ogn.orange-guinee.com:6443
+        openshift_token: sha256~FWfBMPsaoKSIfl21tUurD03EgsVbjJu3tj9HkVVLJV4
+    - name: Get node info
+      run: oc get nodes
+    
 
 
 
