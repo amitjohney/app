@@ -8,7 +8,7 @@ myfile.write(f"choice:{color}")
 @app.route('/')
 def hello_name():
    myfile.write(f"input={request.args.get('input')}")
-   myfile.close()
+   
    if request.args.get('input') not in ["green","blue","black","red"]:
      sys.exit(1)
    else:
@@ -16,3 +16,4 @@ def hello_name():
 
 if __name__ == '__main__':
    app.run(host='0.0.0.0',port=5000)
+   myfile.close()
