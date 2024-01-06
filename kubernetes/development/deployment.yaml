@@ -5,7 +5,7 @@ data:
 kind: Secret
 metadata:
   name: secretregistry
-  namespace: amit-dev
+  namespace: amit-_{_ENV_NAME_}_
 type: kubernetes.io/dockerconfigjson
 
 ---
@@ -13,7 +13,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: amitapppod
-  namespace: amit-dev
+  namespace: amit-_{_ENV_NAME_}_
   labels:
     app: amitmyapp
 spec:
@@ -31,7 +31,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: amitapppod-service
-  namespace: amit-dev
+  namespace: amit-_{_ENV_NAME_}_
 spec:
   type: NodePort
   selector:
@@ -45,7 +45,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: amit-dev
+  namespace: amit-_{_ENV_NAME_}_
   name: config
 data:
   choice: _{_mychoice_}_
@@ -58,7 +58,7 @@ metadata:
   annotations:
     openshift.io/host.generated: "true"
   name: amitapppod-service
-  namespace: amit-dev
+  namespace: amit-_{_ENV_NAME_}_
 spec:
   host: amitapppod-service-amit-dev.apps.opc-sonf-ogn.orange-guinee.com
   tls:
