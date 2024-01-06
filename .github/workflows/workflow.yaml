@@ -37,17 +37,17 @@ jobs:
       run: python3 app.py &
     - name: Chaning permission of shell script
       run: chmod 777 test.sh
-    - name: Running Test script test.sh
-      id: myoutput
-      run: ./test.sh
     - name: Download artifact created in unit-testing job
       uses: actions/download-artifact@v4
       with:
         name: myartifact
+    - name: Running Test script test.sh
+      id: myoutput
+      run: ./test.sh
     - name: Check content of Downloaded artifact form unit-testing job
       run: cat testoutput
     - name: Upload coverage artifact report
       uses: actions/upload-artifact@v4
       with:
         name: coverage-report
-        path: coverage_report
+        path: testoutput
