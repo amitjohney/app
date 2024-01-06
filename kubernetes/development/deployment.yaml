@@ -60,7 +60,7 @@ metadata:
   name: amitapppod-service
   namespace: amit-_{_ENV_NAME_}_
 spec:
-  host: amitapppod-service-amit-dev.apps.opc-sonf-ogn.orange-guinee.com
+  host: amitapppod-service-amit-_{_ENV_NAME_}_.apps.opc-sonf-ogn.orange-guinee.com
   tls:
     termination: edge
   to:
