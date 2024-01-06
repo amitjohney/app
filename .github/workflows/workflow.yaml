@@ -57,6 +57,10 @@ jobs:
     steps:
     - name: Checkout action at Docker login job
       uses: actions/checkout@v4
+    - name: Install flask
+      run: pip3 install flask
+    - name: Installing requests module
+      run: pip3 install requests
     - name: Try Docker login
       uses: docker/login-action@v3
       with:
