@@ -163,6 +163,7 @@ jobs:
 
   prod-integration-test:
     runs-on: ubuntu-latest
+    needs: prod-deploy
     steps:
     - name: Install pip3
       run: pip3 install requests
