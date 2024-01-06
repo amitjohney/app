@@ -35,6 +35,8 @@ jobs:
       run: pip3 install flask
     - name: Run app
       run: python3 app.py &
+    - name: Chaning permission of shell script
+      run: chmod 777 test.sh
     - name: Running Test script test.sh
       id: myoutput
       run: ./test.sh
