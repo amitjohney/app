@@ -4,7 +4,7 @@ on:
   push:
     branches:
     - main
-    - testbranch
+    - mybranch
 jobs:
   unit-testing:
     runs-on: ubuntu-latest
