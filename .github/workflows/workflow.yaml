@@ -1,6 +1,6 @@
 name: app workflow
 env:
-  choice: blue
+  choice: green
   input: text
   ENV_NAME: local
 on: 
@@ -118,6 +118,7 @@ jobs:
       env:
         imagename: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
         mychoice: ${{env.choice}}
+        ENV_NAME: ${{env.ENV_NAME}}
     - name: Deploy on dev environment
       run: oc apply -f kubernetes/development/deployment.yaml
     

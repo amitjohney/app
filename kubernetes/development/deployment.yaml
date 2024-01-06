@@ -49,6 +49,7 @@ metadata:
   name: config
 data:
   choice: _{_mychoice_}_
+  ENV_NAME: _{_ENV_NAME_}_
 
 ---
 apiVersion: route.openshift.io/v1
