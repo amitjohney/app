@@ -1,6 +1,6 @@
 from flask import Flask
 import os
-
+import sys
 app = Flask(__name__)
 
 @app.route('/')
@@ -8,7 +8,7 @@ def hello_name():
    
    color = os.environ.get('choice')
    if color not in ["green","blue","black"]:
-     raise Exception("Failed")
+     sys.exit(1)
    else:
      return f"<h1 style='color:{color}'>Hello world</h1>"
 
