@@ -15,7 +15,7 @@ metadata:
   name: amitapp
   namespace: amit-dev
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: amitmyapp
