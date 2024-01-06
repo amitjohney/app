@@ -19,7 +19,7 @@ def hello_name():
      
      sys.exit(1)
    else:
-     return f"<h1 style='color:{color}'>Hello world with Query String {request.args.get('input')}</h1>"
+     return f"<h1 style='color:{color}'>Hello world with Query String {request.args.get('input')} and environment is {os.environ.get('ENV_NAME')}</h1>"
 
 if __name__ == '__main__':
    app.run(host='0.0.0.0',port=5000)
