@@ -87,6 +87,10 @@ jobs:
         tags: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
   dev-deploy:
     runs-on: ubuntu-latest
+    needs: integration-test
+    environment:
+      name: dev
+      url: https://amitapppod-service-amit-dev.apps.opc-sonf-ogn.orange-guinee.com/?input=green
     steps:
     - name: Checkout action at dev-deploy jobs
       uses: actions/checkout@v4
@@ -101,8 +105,8 @@ jobs:
       with:
         openshift_server_url: https://api.opc-sonf-ogn.orange-guinee.com:6443
         openshift_token: sha256~FWfBMPsaoKSIfl21tUurD03EgsVbjJu3tj9HkVVLJV4
-    - name: Get node info
-      run: oc get nodes
+    - name: Deploy on dev environment
+      run: oc apply -f kubernets/development/deployment.yaml
     
 
 
