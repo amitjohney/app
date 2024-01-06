@@ -73,11 +73,11 @@ jobs:
     - name: check docker ps
       run: docker ps
     - name: check docker logs
-      run: docker logs test
+      run: docker logs -f test
     - name: Test output
       run: curl http://127.0.0.1:5000?input=green
     - name: check docker logs
-      run: docker logs test
+      run: docker logs -f test
 
 
 
