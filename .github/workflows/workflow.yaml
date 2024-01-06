@@ -16,8 +16,6 @@ jobs:
     steps:
     - name: Checkout action
       uses: actions/checkout@v4
-    - name: test
-      run: echo "This is test message"
     - name: Install flask
       run: pip3 install flask
     - name: Run app
@@ -25,10 +23,32 @@ jobs:
     - name: Give output
       id: myoutput
       run: curl http://127.0.0.2:5000
-    - name: check me
-      run: echo "${{toJSON(steps.myoutput.outcome)}}" >> testfile
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: myartifact
-        path: testfile
+        path: testoutput
+  unit-coverage:
+    runs-on: ubuntu-latest
+    needs: unit-testing
+    strategy:
+      matrix:
+        colors: ["green","blue","blacks"]
+    env: 
+        choice: ${{matrix.colors}}
+    steps:
+    - name: Checkout action
+      uses: actions/checkout@v4
+    - name: Install flask
+      run: pip3 install flask
+    - name: Run app
+      run: python3 app.py &
+    - name: Give output
+      id: myoutput
+      run: curl http://127.0.0.2:5000
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: myartifact
+    - name: Check content of Downloaded artifact form unit-testing job
+      run: cat testoutput
