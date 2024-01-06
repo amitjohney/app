@@ -118,6 +118,7 @@ jobs:
         imagename: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
         mychoice: ${{env.choice}}
         ENV_NAME: ${{ vars.ENV_NAME}}
+        NODE_PORT: ${{vars.NODE_PORT}}
 
     - name: Deploy on dev environment
       run: oc apply -f kubernetes/development/deployment.yaml
@@ -155,6 +156,7 @@ jobs:
         imagename: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
         mychoice: ${{env.choice}}
         ENV_NAME: ${{ vars.ENV_NAME}}
+        NODE_PORT: ${{vars.NODE_PORT}}
 
     - name: Deploy on prod environment
       run: oc apply -f kubernetes/development/deployment.yaml

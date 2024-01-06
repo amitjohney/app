@@ -39,7 +39,7 @@ spec:
   ports:
     - port: 80
       targetPort: 5000
-      nodePort: 30007
+      nodePort: _{_NODE_PORT_}_
 
 ---
 apiVersion: v1
