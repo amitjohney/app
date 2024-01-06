@@ -4,6 +4,8 @@ import sys
 print(os.environ.get("ENV_NAME"))
 app = Flask(__name__)
 color = os.environ.get('choice')
+print(os.environ.get('ENV_NAME'))
+print(os.environ.get('choice'))
 if os.environ.get('ENV_NAME') not in ["dev","prod"]:
   myfile=open("testoutput","a")
   myfile.write(f"Environment variable value for choice is {color}")
