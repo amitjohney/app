@@ -26,5 +26,9 @@ jobs:
       id: myoutput
       run: curl http://127.0.0.2:5000
     - name: check me
-      run: echo "${{toJSON(steps.myoutput.outcome)}}"
-      
+      run: echo "${{toJSON(steps.myoutput.outcome)}}" >> testfile
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: myartifact
+        path: testfile
