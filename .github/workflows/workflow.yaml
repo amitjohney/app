@@ -69,7 +69,7 @@ jobs:
             push: false
             tags: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
         - name: Run container from image
-          run: docker run -d -p 5000:5000 ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}} --name testappcontainer 
+          run: docker run -d -p 5000:5000 --name test ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}} 
         - name: Test output
           run: curl http://localhost:5000?input=red
 
