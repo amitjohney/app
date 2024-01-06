@@ -1,6 +1,6 @@
 name: app workflow
 env:
-  choice: Indian
+  choice: blue
 on: 
   workflow_dispatch:
   push:
