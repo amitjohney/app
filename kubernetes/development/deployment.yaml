@@ -6,30 +6,29 @@ kind: Secret
 metadata:
   name: secretregistry
   namespace: amit-dev
-  resourceVersion: "151598836"
-  uid: b5c516b7-1686-4c3b-8fb0-8c605d3d2144
 type: kubernetes.io/dockerconfigjson
-###pod.yaml####
+
 ---
 apiVersion: v1
-kind: Pod
+kind: Deployment
 metadata:
-  name: amitapppod
+  name: amitapp
   namespace: amit-dev
-  labels:
-    app: myapp
 spec:
-  containers:
-    - name: amitapppod
-      image: _{_imagename_}_
-      envFrom:
-        - configMapRef:
-            name: config
-  imagePullSecrets:
-    - name: secretregistry
+  template:
+    metadata:
+      name: amitapppod
+      namespace: amit-dev
+    spec:
+      containers:
+        - name: amitapppod
+          image: _{_imagename_}_
+          envFrom:
+            - configMapRef:
+                name: config
+      imagePullSecrets:
+        - name: secretregistry
 
-
-#####svc.yaml#####
 ---
 apiVersion: v1
 kind: Service
@@ -45,8 +44,6 @@ spec:
       targetPort: 5000
       nodePort: 30007
 
-
-######cm.yaml#####
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -56,8 +53,6 @@ metadata:
 data:
   choice: pink
 
-
-######Create route
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
