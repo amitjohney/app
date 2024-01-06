@@ -163,8 +163,11 @@ jobs:
 
   prod-integration-test:
     runs-on: ubuntu-latest
+    if: contains(github.ref,'main')
     needs: prod-deploy
     steps:
+    - name: Checkout action at prod-integration-step
+      uses: actions/checkout@v4
     - name: Install pip3
       run: pip3 install requests
     - name: Test
