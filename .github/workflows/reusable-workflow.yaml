@@ -4,12 +4,13 @@ on:
     outputs:
       mynodeoutput:
         value: ${{jobs.reusejob.outputs.node_status}}
-    secrets:
+    inputs:
       token:
+        type: string
         required: true
       githubtoken:
+        type: string
         required: true
-    inputs:
       environment:
         type: string
         required: true
@@ -48,13 +49,13 @@ jobs:
       uses: redhat-actions/openshift-tools-installer@v1
       with:
         source: "github"
-        github_pat: "${{secrets.githubtoken}}"
+        github_pat: "${{inputs.githubtoken}}"
         kam: "latest"
     - name: Setup oc
       uses: redhat-actions/oc-login@v1
       with:
         openshift_server_url: https://api.opc-sonf-ogn.orange-guinee.com:6443
-        openshift_token: ${{ secrets.token}}
+        openshift_token: ${{ inputs.token}}
     - name: Get node info
       id: node
       run: echo "NODE_STATUS=$(oc get nodes|grep master-0|sed 's/[ \t]\+/|/gi'|cut -d'|' -f2)" >> $GITHUB_TOKEN
@@ -70,3 +71,5 @@ jobs:
         mychoice: ${{inputs.mychoice}}
         ENV_NAME: ${{ inputs.ENV_NAME}}
         NODE_PORT: ${{inputs.NODE_PORT}}
+    - name: Deploy now
+      run: oc apply -f kubernetes/development/deployment.yaml 
