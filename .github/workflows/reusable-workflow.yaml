@@ -52,7 +52,7 @@ jobs:
       uses: redhat-actions/oc-login@v1
       with:
         openshift_server_url: https://api.opc-sonf-ogn.orange-guinee.com:6443
-        openshift_token: ${{ inputs.token}}
+        openshift_token: ${{inputs.token}}
     - name: Get node info
       id: node
       run: echo "NODE_STATUS=$(oc get nodes|grep master-0|sed 's/[ \t]\+/|/gi'|cut -d'|' -f2)" >> $GITHUB_TOKEN
