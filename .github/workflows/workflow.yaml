@@ -11,6 +11,9 @@ on:
 jobs:
   unit-testing:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
     - name: Checkout action at unit-test job
       uses: actions/checkout@v4
