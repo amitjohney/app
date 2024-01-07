@@ -1,4 +1,4 @@
-
+#!/bin/sh
 echo "hello"
 # TOKEN=$1
 # REPO_OWNER=$2
