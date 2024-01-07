@@ -5,7 +5,7 @@ inputs:
     type: string
 
 runs:
-  uses: "composite"
+  using: 'composite'
   steps:
     - name: Install ${{inputs.pipname}}
       run: pip3 install ${{inputs.pipname}}
