@@ -1,0 +1,28 @@
+name: docker action
+inputs:
+  token:
+    required: true
+    type: string
+  repo_owner:
+    required: true
+    type: string
+  repo_name:
+    required: true
+    type: string
+  bug_title:
+    required: true
+    type: string
+  bug_msg:
+    required: true
+    type: string
+    
+
+runs:
+  using: "docker"
+  image: Dockerfile
+  args:
+  - ${{inputs.token}}
+  - ${{inputs.repo_owner}}
+  - ${{inputs.repo_name}}
+  - ${{inputs.bug_title}}
+  - ${{inputs.bug_msg}}
