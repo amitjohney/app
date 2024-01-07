@@ -1,6 +1,6 @@
 name: small_action
 outputs:
-  testoutput: ${{testrun.steps.mytestoutput.outputs.MSG}}
+  testoutput: ${{steps.mytestoutput.outputs.MSG}}
 inputs:
   pipname:
     required: true
