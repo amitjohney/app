@@ -18,8 +18,6 @@ jobs:
       uses: ./.github/workflows/pip-install
       with:
         pipname: flask
-    - name: Show me output
-      run: "echo Value is ${{steps.flasktask.outputs.testoutput}}"
     - name: Run app
       run: python3 app.py &
     - name: Give output
@@ -42,8 +40,6 @@ jobs:
       uses: ./.github/workflows/pip-install
       with:
         pipname: flask
-    - name: Show me output
-      run: echo "Value is ${{steps.flasktask.outputs.testoutput}}"
     - name: Installing requests module
       run: pip3 install requests
     - name: Run app
