@@ -12,22 +12,9 @@ on:
         type: string
         required: true
         default: dev
-      url:
-        type: string
-        required: true
-      imagename:
-        type: string
-        required: true
       mychoice:
         type: string
         required: true
-      ENV_NAME:
-        type: string
-        required: true
-      NODE_PORT:
-        type: string
-        required: true
-      
     
 jobs:
   reusejob:
@@ -37,7 +24,7 @@ jobs:
       node_status: ${{steps.node.outputs.NODE_STATUS}}
     environment:
       name: ${{ inputs.environment }}
-      url: ${{ inputs.url}}
+      url: https://amitapppod-service-amit-${{vars.ENV_NAME}}.apps.opc-sonf-ogn.orange-guinee.com/?input=green
 
     steps:
     - name: Checkout action at jobs
@@ -64,9 +51,9 @@ jobs:
         tokenSuffix: '_}_'
         files: '["kubernetes/development/deployment.yaml"]'
       env:
-        imagename: ${{ inputs.imagename}}
+        imagename: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
         mychoice: ${{inputs.mychoice}}
         ENV_NAME: ${{ vars.ENV_NAME}}
-        NODE_PORT: ${{inputs.NODE_PORT}}
+        NODE_PORT: ${{vars.NODE_PORT}}
     - name: Deploy now
       run: oc apply -f kubernetes/development/deployment.yaml 
