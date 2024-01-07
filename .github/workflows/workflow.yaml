@@ -26,8 +26,8 @@ jobs:
         -H "Accept: application/vnd.github+json" \
         -H "Authorization: Bearer ${{github.token}}" \
         -H "X-GitHub-Api-Version: 2022-11-28" \
-        https://api.github.com/repos/amitjohney/app/issues \
-        -d '{"title":"Found a bug","body":"I'\''m having a problem with this.","labels":["bug"]}'
+        https://api.github.com/repos/${{github.repository_owner}}/app/issues \
+        -d '{"title":"Found a bug","body2":"I'\''m having a problem with this. ![GIF] https://media2.giphy.com/media/xUA7aWi4gtOdAaX9q8/giphy-preview.gif?cid=02fceb566989d00f03f4eead4f6409905e38ef59b93b7301&ep=v1_stickers_packs_id_stickers&rid=giphy-preview.gif&ct=g%22 ","labels":["bug"]}'
     - name: Install package using composite action
       id: flasktask
       uses: ./.github/workflows/pip-install
