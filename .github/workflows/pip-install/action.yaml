@@ -1,6 +1,6 @@
 name: small_action
 outputs:
-  testoutput: ${{runs.steps.mytestoutput.outputs.MSG}}
+  testoutput: ${{runs.testrun.steps.mytestoutput.outputs.MSG}}
 inputs:
   pipname:
     required: true
@@ -8,6 +8,7 @@ inputs:
 
 runs:
   using: "composite"
+  id: testrun
   steps:
     - name: Install ${{inputs.pipname}}
       run: pip3 install ${{inputs.pipname}}
