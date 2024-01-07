@@ -12,6 +12,8 @@ jobs:
   unit-testing:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout action at unit-test job
+      uses: actions/checkout@v4
     - name: Install package using composite action
       uses: ./.github/workflows/pip-install
       with:
@@ -33,6 +35,8 @@ jobs:
     needs: unit-testing
     continue-on-error: false
     steps:
+    - name: Checkout action at unit-test job
+      uses: actions/checkout@v4
     - name: Install package using composite action
       id: flasktask
       uses: ./.github/workflows/pip-install
