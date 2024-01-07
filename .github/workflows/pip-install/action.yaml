@@ -14,5 +14,5 @@ runs:
       shell: bash
     - name: This is example output
       id: mytestoutput
-      run: "echo MSG=HelloWorld >> $GITHUB_OUTPUT"
+      run: "echo $MSG=HelloWorld >> $GITHUB_OUTPUT"
       shell: bash
