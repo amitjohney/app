@@ -27,7 +27,7 @@ jobs:
         -H "Authorization: Bearer ${{github.token}}" \
         -H "X-GitHub-Api-Version: 2022-11-28" \
          https://api.github.com/repos/${{github.repository_owner}}/app/pulls/9/comments \
-        -d '{"body":"This comment is from work flow"}'
+        -d '{"body":"This comment is from work flow","commit_id":"561945a408355a6fc84a8b913c874735693a1fc1","path":"file1.txt","start_line":1,"start_side":"RIGHT","line":2,"side":"RIGHT"}'
   
     - name: Install package using composite action
       id: flasktask
