@@ -1,10 +1,11 @@
 name: small_action
 outputs:
-  testoutput: ${{runs.mytestoutput.outputs.MSG}}
+  testoutput: ${{steps.mytestoutput.outputs.MSG}}
 inputs:
   pipname:
     required: true
     type: string
+
 runs:
   uses: "composite"
   steps:
