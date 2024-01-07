@@ -1,12 +1,18 @@
 name: small_action
+outputs:
+  testoutput: ${{runs.steps.mytestoutput.outputs.MSG}}
 inputs:
   pipname:
     required: true
     type: string
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Install ${{inputs.pipname}}
       run: pip3 install ${{inputs.pipname}}
+      shell: bash
+    - name: This is example output
+      id: mytestoutput
+      run: "echo MSG=HelloWorld >> $GITHUB_OUTPUT"
       shell: bash
