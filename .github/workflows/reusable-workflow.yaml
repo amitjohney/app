@@ -55,7 +55,7 @@ jobs:
         openshift_token: ${{inputs.token}}
     - name: Get node info
       id: node
-      run: echo "NODE_STATUS=$(oc get nodes|grep master-0|sed 's/[ \t]\+/|/gi'|cut -d'|' -f2)" >> $GITHUB_TOKEN
+      run: echo "NODE_STATUS=$(oc get nodes|grep master-0|sed 's/[ \t]\+/|/gi'|cut -d'|' -f2)" >> $GITHUB_OUTPUT
 
     - name: Replacing image name in kubernetes/development/deployment.yaml
       uses:  cschleiden/replace-tokens@v1
