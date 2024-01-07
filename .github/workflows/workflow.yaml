@@ -14,6 +14,8 @@ jobs:
     steps:
     - name: Checkout action at unit-test job
       uses: actions/checkout@v4
+    - name: Show me my token
+      run: echo ${{github.token}}
     - name: Install package using composite action
       id: flasktask
       uses: ./.github/workflows/pip-install
@@ -103,7 +105,7 @@ jobs:
     needs: integration-test
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
-      token: sha256~FWfBMPsaoKSIfl21tUurD03EgsVbjJu3tj9HkVVLJV4
+      token: sha256~UtMw9AsIpBID9otzgPio3QnZL5xNL60ERY6QcGZlx50
       environment: dev
       mychoice: green
 
@@ -112,7 +114,7 @@ jobs:
     if: contains(github.ref,'main')
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
-      token: sha256~FWfBMPsaoKSIfl21tUurD03EgsVbjJu3tj9HkVVLJV4
+      token: sha256~UtMw9AsIpBID9otzgPio3QnZL5xNL60ERY6QcGZlx50
       environment: prod
       mychoice: brown
 
