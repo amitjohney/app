@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 TOKEN=$1
 REPO_OWNER=$2
