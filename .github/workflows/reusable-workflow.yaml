@@ -8,9 +8,6 @@ on:
       token:
         type: string
         required: true
-      githubtoken:
-        type: string
-        required: true
       environment:
         type: string
         required: true
@@ -49,7 +46,7 @@ jobs:
       uses: redhat-actions/openshift-tools-installer@v1
       with:
         source: "github"
-        github_pat: "${{inputs.githubtoken}}"
+        github_pat: "${{github.token}}"
         kam: "latest"
     - name: Setup oc
       uses: redhat-actions/oc-login@v1

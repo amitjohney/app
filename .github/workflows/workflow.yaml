@@ -92,8 +92,7 @@ jobs:
     needs: integration-test
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
-      githubtoken: "${{github.token}}"
-      token: "sha256~FWfBMPsaoKSIfl21tUurD03EgsVbjJu3tj9HkVVLJV4"
+      token: sha256~FWfBMPsaoKSIfl21tUurD03EgsVbjJu3tj9HkVVLJV4
       environment: dev
       url: https://amitapppod-service-amit-${{vars.ENV_NAME}}.apps.opc-sonf-ogn.orange-guinee.com/?input=green
       imagename:  ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
