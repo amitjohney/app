@@ -12,10 +12,12 @@ jobs:
   unit-testing:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout action at unit-test job
-      uses: actions/checkout@v4
-    - name: Install flask
-      run: pip3 install flask
+    - name: Install package using composite action
+      uses: ./.github/workflows/pip-install
+      with:
+        pipname: flask
+    - name: Show me output
+      run: "echo Value is ${{steps.flasktask.outputs.testoutput}}"
     - name: Run app
       run: python3 app.py &
     - name: Give output
@@ -31,10 +33,13 @@ jobs:
     needs: unit-testing
     continue-on-error: false
     steps:
-    - name: Checkout action at unit-coverage job
-      uses: actions/checkout@v4
-    - name: Install flask
-      run: pip3 install flask
+    - name: Install package using composite action
+      id: flasktask
+      uses: ./.github/workflows/pip-install
+      with:
+        pipname: flask
+    - name: Show me output
+      run: echo "Value is ${{steps.flasktask.outputs.testoutput}}"
     - name: Installing requests module
       run: pip3 install requests
     - name: Run app
