@@ -1,30 +1,172 @@
 name: app workflow
+env:
+  choice: green
+  input: text
 on: 
   workflow_dispatch:
   push:
     branches:
     - main
-    - testbranch
+    - mybranch
 jobs:
   unit-testing:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        colors: ["green","blue","black"]
-    env:
-      choice: ${{matrix.colors}}
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
-    - name: Checkout action
+    - name: Checkout action at unit-test job
       uses: actions/checkout@v4
-    - name: test
-      run: echo "This is test message"
-    - name: Install flask
-      run: pip3 install flask
+    - name: Show me my token
+      run: echo ${{github.token}}
+    - name: Show PR action
+      uses: ./.github/workflows/prwork
+      with:
+        token: ${{github.token}}
+        repo_owner: ${{github.repository_owner}}
+        repo_name: app
+        bug_title: "Arrey bug hai yaar"
+        bug_msg: "Hello world from everyone"
+
+    - name: Install package using composite action
+      id: flasktask
+      uses: ./.github/workflows/pip-install
+      with:
+        pipname: flask
+    - name: Show me output
+      run: "echo Value is ${{ steps.flasktask.outputs.testoutput}}"
     - name: Run app
       run: python3 app.py &
     - name: Give output
       id: myoutput
-      run: curl http://127.0.0.2:5000
-    - name: check me
-      run: echo "${{toJSON(steps.myoutput.outcome)}}"
-      
+      run: curl http://127.0.0.1:5000?input=black
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: myartifact
+        path: testoutput
+  unit-coverage:
+    runs-on: ubuntu-latest
+    needs: unit-testing
+    continue-on-error: false
+    steps:
+    - name: Checkout action at unit-test job
+      uses: actions/checkout@v4
+    - name: Install package using composite action
+      id: flasktask
+      uses: ./.github/workflows/pip-install
+      with:
+        pipname: flask
+    - name: Show me output
+      run: echo "Value is ${{steps.flasktask.outputs.testoutput}}"
+    - name: Installing requests module
+      run: pip3 install requests
+    - name: Run app
+      run: python3 app.py &
+    - name: Download artifact created in unit-testing job
+      uses: actions/download-artifact@v4
+      with:
+        name: myartifact
+    - name: Running Test script test.py
+      id: myoutput
+      run: python3 test.py
+      env:
+        ENV_NAME: local
+    - name: Check content of Downloaded artifact form unit-testing job
+      run: cat testoutput
+    - name: Upload coverage artifact report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: testoutput
+  integration-test:
+    runs-on: ubuntu-latest
+    needs: unit-coverage
+    steps:
+    - name: Checkout action at Docker login job
+      uses: actions/checkout@v4
+    - name: Try Docker login
+      uses: docker/login-action@v3
+      with:
+        username: ${{vars.DOCKERHUB_USERNAME}}
+        password: ${{secrets.DOCKERHUB_PASSWORD}}
+    - name: Docker build
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        push: false
+        tags: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
+    - name: Run container from image
+      run: docker run -d -p 5000:5000 --name test ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}} 
+    - name: check docker ps before sleep
+      run: docker ps
+    - name: check docker logs before sleep
+      run: docker logs test
+    - name: Sleep for 5 seconds
+      run: sleep 5
+    - name: check api output after sleep
+      run: curl http://localhost:5000?input=green
+    - name: Docker Push
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        push: true
+        tags: ${{vars.DOCKERHUB_USERNAME}}/myworkflowappqsimage-${{github.sha}}
+
+  dev-deploy:
+    needs: integration-test
+    uses: ./.github/workflows/reusable-workflow.yaml
+    with:
+      token: sha256~UtMw9AsIpBID9otzgPio3QnZL5xNL60ERY6QcGZlx50
+      environment: dev
+      mychoice: green
+
+  prod-deploy:
+    needs: dev-deploy
+    if: contains(github.ref,'main')
+    uses: ./.github/workflows/reusable-workflow.yaml
+    with:
+      token: sha256~UtMw9AsIpBID9otzgPio3QnZL5xNL60ERY6QcGZlx50
+      environment: prod
+      mychoice: brown
+
+  integration-test-post:
+    runs-on: ubuntu-latest
+    if: contains(github.ref,'main')
+    needs: prod-deploy
+    strategy:
+      matrix:
+        testenv: [dev,prod]
+    env:
+      ENV_NAME: ${{ matrix.testenv}}
+    steps:
+    - name: Checkout action at prod-integration-step
+      uses: actions/checkout@v4
+    - name: Install pip3
+      run: pip3 install requests
+    - name: Test
+      run: python3 test.py
+    - name: Display Result from prod-deploy job
+      run: echo "Value is ${{ needs.prod-deploy.outputs.mynodeoutput}}"
+  slack_notify:
+    runs-on: ubuntu-latest
+    needs: [dev-deploy]
+    steps:
+    - name: Please notify to workspace channel
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{secrets.SLACK_WEBHOOK}}
+        SLACK_CHANNEL: dev
+        SLACK_TITLE: "Amit Kumar github"
+        SLACK_MESSAGE: "Something triggered"
+
+
+
+
+
+    
+
+
+
+
+
