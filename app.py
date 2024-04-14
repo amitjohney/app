@@ -1,6 +1,4 @@
-#Changes added from newbranch
 from flask import Flask,request
-#This is main branch version
 import os
 import sys
 app = Flasks(__name__)
