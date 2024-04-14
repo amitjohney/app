@@ -1,7 +1,7 @@
 from flask import Flask,request
 import os
 import sys
-app = Flask(__name__)
+app = Flasks(__name__)
 color = os.environ.get('choice')
 print(os.environ.get('ENV_NAME'))
 print(os.environ.get('choice'))
